@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt-nodejs')
-
+const colors = require('colors');
 module.exports = app => { 
 
     const  { existsOrError, notExistsOrError, equalsOrError} = app.api.validation
@@ -36,12 +36,12 @@ module.exports = app => {
                 .update(user)
                 .where({id: user.id})
                 .then( () => res.status(204).send())
-                .catch( err => {res.status(500).send(err), console.log(err, 'erro na função de em realizando update do usuario')})
+                .catch( err => {res.status(500).send(err), console.log(err, 'erro na função de em realizando update do usuario'.red)})
        } else {
            app.db('users')
            .insert(user)
            .then( () => res.status(204).send())
-           .catch( err  => {res.status(500).send(err), console.log(err, 'erro na função de inserir um usuario no banco de dados')})
+           .catch( err  => {res.status(500).send(err), console.log(err, 'erro na função de inserir um usuario no banco de dados'.red)})
        }
     }
 
@@ -49,7 +49,7 @@ module.exports = app => {
         app.db('users')
         .select('id', 'name', 'email', 'admin' )
         .then(users => res.json(users))
-        .catch(err => {res.status(500).send(err), console.log(err, 'erro na função de enviar todos os usuarios cadastrados no banco de dados')})
+        .catch(err => {res.status(500).send(err), console.log(err, 'erro na função de enviar todos os usuarios cadastrados no banco de dados'.red)})
     }
 
     const getById = (req, res) => {
@@ -58,7 +58,7 @@ module.exports = app => {
         .where({id: req.params.id})
         .first()
         .then(user => res.json(user))
-        .catch(err =>  {res.status(500).send(err), console.log(err, 'erro não função de capturando um usuario pelo ID')})
+        .catch(err =>  {res.status(500).send(err), console.log(err, 'erro não função de capturando um usuario pelo ID'.red)})
     }
 
     return { save, get, getById }

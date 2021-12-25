@@ -76,7 +76,7 @@ module.exports =  app => {
         const get = (req, res) => {
             app.db('categories')
                 .then(categories => res.json(withPath(categories)))
-                .catch(err => {res.status(500).send(err), console.log(err,'erro no get de categories')})
+                .catch(err => {res.status(500).send(err), console.log(err,'erro no get de categories'.red)})
         }
 
         const getById = (req, res) => {
@@ -84,7 +84,7 @@ module.exports =  app => {
                 .where({id: req.params.id})
                 .first()
                 .then(category => res.json(category))
-                .catch(err => { res.status(500).send(err), console.log(err, 'erro no getId da categories')})
+                .catch(err => { res.status(500).send(err), console.log(err, 'erro no getId da categories'.red)})
         }
 
         const toTree = (categories, tree) => {
@@ -100,7 +100,7 @@ module.exports =  app => {
         const getTree = (req, res) => {
             app.db('categories')
                 .then(categories => res.json(toTree(categories)))
-                .catch( err => {res.status(500).res.send(err), console.log(err, 'esse erro foi no getTree da categoria')})
+                .catch( err => {res.status(500).res.send(err), console.log(err, 'esse erro foi no getTree da categoria'.red)})
         }
 
         return {save, remove, get, getById, getTree}

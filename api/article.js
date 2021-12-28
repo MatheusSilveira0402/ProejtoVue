@@ -1,4 +1,3 @@
-const colors = require('colors')
 const queries = require('./queries')
 
 module.exports = app => {

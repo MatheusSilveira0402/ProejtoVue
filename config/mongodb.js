@@ -1,6 +1,8 @@
 const colors = require('colors');
+const { mongo } =require('./../.env')
+
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/knowledge_stats', { useNewUrlParser: true })
+mongoose.connect(mongo, { useNewUrlParser: true })
     .then(e => {
         console.log('Tudo certo com mongodb'.green)
     })

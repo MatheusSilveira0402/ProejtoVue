@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt-nodejs')
-const colors = require('colors');
 module.exports = app => { 
 
     const  { existsOrError, notExistsOrError, equalsOrError} = app.api.validation
@@ -35,6 +34,7 @@ module.exports = app => {
             app.db('users')
                 .update(user)
                 .where({id: user.id})
+                .whereNull('deletedAt')
                 .then( () => res.status(204).send())
                 .catch( err => {res.status(500).send(err), console.log(err, 'erro na função de em realizando update do usuario'.red)})
        } else {
@@ -48,6 +48,7 @@ module.exports = app => {
     const get = (req, res) => {
         app.db('users')
         .select('id', 'name', 'email', 'admin' )
+        .whereNull('deletedAt')
         .then(users => res.json(users))
         .catch(err => {res.status(500).send(err), console.log(err, 'erro na função de enviar todos os usuarios cadastrados no banco de dados'.red)})
     }
@@ -56,10 +57,28 @@ module.exports = app => {
         app.db('users')
         .select('id', 'name', 'email', 'admin' )
         .where({id: req.params.id})
+        .whereNull('deletedAt')
         .first()
         .then(user => res.json(user))
         .catch(err =>  {res.status(500).send(err), console.log(err, 'erro não função de capturando um usuario pelo ID'.red)})
     }
 
-    return { save, get, getById }
+    const remove  = async (req, res) => {
+        try {
+            const articles = await app.db('articles')
+                .where({ userId: req.params.id })
+            notExistsOrError(articles, 'Usuário possui artigos.')
+
+            const rowsUpdated = await app.db('users')
+                .update({deletedAt: new Date()})
+                .where({id: req.params.id})
+            existsOrError(rowsUpdated, 'Usuário não foi encontrado.')
+            
+            res.status(204).send()
+        } catch (msg) {
+            res.status(400).send(msg, console.log(error, 'erro esta na função de remove no users'.red))
+        }
+    }
+
+    return { save, get, getById, remove }
 }

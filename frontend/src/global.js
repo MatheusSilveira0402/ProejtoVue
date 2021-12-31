@@ -1,0 +1,1 @@
+export const baseApiUrl = 'http://matheus.tech4every1.com.br:8002'

@@ -12,37 +12,40 @@ module.exports = app => {
         const user = { ...req.body }
         if(req.params.id) user.id = req.params.id
 
-       try {
-            existsOrError(user.name, 'Nome não informado')
-            existsOrError(user.email, 'E-mail não informado')
-            existsOrError(user.password, 'Senha não informada')
-            existsOrError(user.confirmPassword, 'Confirmação de senha inválida') 
-            equalsOrError(user.password, user.confirmPassword, 'Senhas não conferem')
+        if(!req.originalUrl.startsWith('/users')) user.admin = false
+        if(!req.user || !req.user.admin) user.admin = false
 
-            const userFromDB = await app.db('users').where({ email: user.email }).first()
-            if(!user.id) {
-                notExistsOrError(userFromDB, 'Usuário já cadastrado')
-            }
-       } catch(msg){
-            return res.status(400).send(msg)
-       }
+        try {
+                existsOrError(user.name, 'Nome não informado')
+                existsOrError(user.email, 'E-mail não informado')
+                existsOrError(user.password, 'Senha não informada')
+                existsOrError(user.confirmPassword, 'Confirmação de senha inválida') 
+                equalsOrError(user.password, user.confirmPassword, 'Senhas não conferem')
 
-       user.password = encryptPassword(user.password)
-       delete user.confirmPassword
+                const userFromDB = await app.db('users').where({ email: user.email }).first()
+                if(!user.id) {
+                    notExistsOrError(userFromDB, 'Usuário já cadastrado')
+                }
+        } catch(msg){
+                return res.status(400).send(msg)
+        }
 
-       if(user.id){
+        user.password = encryptPassword(user.password)
+        delete user.confirmPassword
+
+        if(user.id){
+                app.db('users')
+                    .update(user)
+                    .where({id: user.id})
+                    .whereNull('deletedAt')
+                    .then( () => res.status(204).send())
+                    .catch( err => {res.status(500).send(err), console.log(err, 'erro na função de em realizando update do usuario'.red)})
+        } else {
             app.db('users')
-                .update(user)
-                .where({id: user.id})
-                .whereNull('deletedAt')
-                .then( () => res.status(204).send())
-                .catch( err => {res.status(500).send(err), console.log(err, 'erro na função de em realizando update do usuario'.red)})
-       } else {
-           app.db('users')
-           .insert(user)
-           .then( () => res.status(204).send())
-           .catch( err  => {res.status(500).send(err), console.log(err, 'erro na função de inserir um usuario no banco de dados'.red)})
-       }
+            .insert(user)
+            .then( () => res.status(204).send())
+            .catch( err  => {res.status(500).send(err), console.log(err, 'erro na função de inserir um usuario no banco de dados'.red)})
+        }
     }
 
     const get = (req, res) => {

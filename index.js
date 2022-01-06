@@ -20,6 +20,6 @@ consign()
     .into(app)
 
 
-app.listen(8002, ()=>{
+app.listen(8001, ()=>{
     console.log('beckend executado...')
 })

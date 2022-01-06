@@ -33,20 +33,21 @@ module.exports = app => {
     const remove = async (req, res) => {
         try {
             const rowsDeleted = await app.db('articles')
-                .where({id: req.params.id }).del()
-            try {
-                existsOrError(rowsDeleted, 'Artigo não for encontrado.') 
-            } catch (msg) {
-                return res.status(400).send(msg), console.log(msg, ' erro 400, na função de remover articles, OBS: Pode ser algo no front end '.red)
-            }
+                .where({ id: req.params.id }).del()
             
-            res.status(204).send() 
-        } catch (msg) {
-            res.status(500).send(msg), console.log(msg, 'erro na função de remover articles'.red)  
+            try {
+                existsOrError(rowsDeleted, 'Artigo não foi encontrado.')
+            } catch(msg) {
+                return res.status(400).send(msg)    
+            }
+
+            res.status(204).send()
+        } catch(msg) {
+            res.status(500).send(msg), console.log(msg, 'erro na função de remover articles'.red)
         }
     }
     
-    const limit = 10 // usando para paginação
+    const limit = 3 // usando para paginação
     
     const get = async (req, res) => {
         const page  = req.query.page || 1
@@ -63,13 +64,13 @@ module.exports = app => {
 
     const getById = (req, res) => {
         app.db('articles')
-            .where({id: req.params.id})
+            .where({ id: req.params.id })
             .first()
-            .then(articles => {
-                articles.content = articles.content.toString()
-                return res.json(articles)
-            })
-            .catch(err => {res.status(500).send(err), console.log(err, 'erro na função do getByid'.red)})
+            .then(article => {
+                article.content = article.content.toString()
+                return res.json(article)
+        })
+        .catch(err => {res.status(500).send(err), console.log(err, 'erro na função do getByid em articles'.red)})
     }
 
     const getByCategory = async (req, res) => {

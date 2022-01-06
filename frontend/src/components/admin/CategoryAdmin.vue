@@ -14,7 +14,6 @@
                     <b-form-select v-if="mode === 'save'"
                         id="category-parentId" 
                         :options="categories" 
-                        :readonly="mode === 'remove'"
                         v-model="category.parentId" />
                     <b-form-input v-else
                         id="category-parentId" 

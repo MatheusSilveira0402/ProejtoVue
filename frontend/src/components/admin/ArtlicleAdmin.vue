@@ -1,7 +1,7 @@
 <template>    
     <div class="article-admin">
-        <h1>Categoria compomente</h1>
-         <b-form>
+        
+         <b-form>   
             <input type="hidden" id="article-id" v-model="article.id" /> 
                 <b-form-group label="Nome:" label-for="article-name">
                     <b-form-input id="article-name" type="text" 
@@ -46,11 +46,11 @@
         </b-form>
         <hr>
         <b-table hover striped :items="articles" :fields="fields">
-            <template slot="actions" slot-scope="data">
+            <template slot="actions" slot-scope="data" >
                 <b-button variant="warning" @click="loadArticle(data.item)" class="mr-2">
-                    <i class="fa fa-pencil" ></i>
+                    <i class="fa fa-pencil"></i>
                 </b-button>
-                <b-button variant="danger" @click="loadArticle(data.item, 'remove')">
+                <b-button variant="danger" v-if="user.admin" @click="loadArticle(data.item, 'remove')">
                     <i class="fa fa-trash"></i>
                 </b-button>
             </template>
@@ -63,6 +63,7 @@
 import { VueEditor } from 'vue2-editor'
 import { baseApiUrl, showError } from '@/global'
 import axios  from 'axios'
+import { mapState } from 'vuex'
 
 export default {
     name: 'ArticleAdmin',
@@ -74,6 +75,8 @@ export default {
             articles: [],
             categories:[],
             users:[],
+            articlesAuthor: [],
+            usersAuthor:[],
             page: 1,
             limit: 0,
             count:0,
@@ -87,14 +90,26 @@ export default {
             ]
         }
     },
+    computed: mapState(['user']),
     methods: {
         loadArticles(){
             const url = `${baseApiUrl}/articles?page=${this.page}`
             axios.get(url).then(res => {
-                this.articles = res.data.data
+                this.usersAuthor = res.data.data 
                 this.count = res.data.count
                 this.limit = res.data.limit
-                })
+                if(this.user.admin === true){
+                    this.articles = res.data.data
+                    return
+                } 
+
+                for(let i=0; i < this.usersAuthor.length; i++){
+                    if(this.user.id === this.usersAuthor[i].userId){
+                       this.articlesAuthor.push(this.usersAuthor[i])
+                    }
+                } 
+                this.articles = this.articlesAuthor
+            })
         },
         reset() {
             this.mode = 'save'
@@ -124,7 +139,10 @@ export default {
         loadArticle(article, mode = 'save'){
             this.mode = mode 
             axios.get(`${baseApiUrl}/articles/${article.id}`)
-                .then(res => this.article = res.data)
+                .then(res => {
+                    this.article = res.data
+
+                })
         },
         loadCategories(){
             const url = `${baseApiUrl}/categories`

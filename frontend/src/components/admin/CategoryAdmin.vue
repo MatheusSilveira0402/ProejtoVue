@@ -1,6 +1,6 @@
 <template>
     <div class="category-admin">
-        <h1>Categoria compomente</h1>
+
          <b-form>
             <input type="hidden" id="category-id" v-model="category.id" /> 
                 <b-form-group label="Nome:" label-for="category-name">
@@ -27,10 +27,10 @@
         <hr>
         <b-table hover striped :items="categories" :fields="fields">
             <template slot="actions" slot-scope="data">
-                <b-button variant="warning" @click="loadCategory(data.item)" class="mr-2">
+                <b-button variant="warning"  @click="loadCategory(data.item)" class="mr-2">
                     <i class="fa fa-pencil" ></i>
                 </b-button>
-                <b-button variant="danger" @click="loadCategory(data.item, 'remove')">
+                <b-button variant="danger" v-if="user.z" @click="loadCategory(data.item, 'remove')">
                     <i class="fa fa-trash"></i>
                 </b-button>
             </template>
@@ -41,6 +41,7 @@
 <script>
 import { baseApiUrl, showError } from '@/global'
 import axios  from 'axios'
+import { mapState } from 'vuex'
 
 export default {
     name: 'CategoryAdmin',
@@ -60,6 +61,7 @@ export default {
             ]
         }
     },
+    computed: mapState(['user']),
     methods: {
         loadCategories(){
             const url = `${baseApiUrl}/categories`

@@ -13,7 +13,8 @@
                         <CategoryAdmin />
                     </b-tab>
                     <b-tab title="Usuário">
-                        <UserAdmin />
+                        <UserAdmin v-if="user.admin"/>
+                        <h1 class="text" v-else>Você não é administrador</h1>
                     </b-tab>
                 </b-tabs>
             </b-card>
@@ -22,6 +23,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import PageTitle from '../template/PageTitle.vue'
 import ArticleAdmin from './ArtlicleAdmin.vue'
 import CategoryAdmin from './CategoryAdmin.vue'
@@ -29,10 +31,14 @@ import UserAdmin from './UserAdmin.vue'
 
 export default {
     name: 'AdminPages',
-    components: { PageTitle, ArticleAdmin, CategoryAdmin, UserAdmin }
+    components: { PageTitle, ArticleAdmin, CategoryAdmin, UserAdmin },
+    computed: mapState(['user']),
 }
 </script>
 
 <style>
+    .text {
+        text-align: center;
+    }
 
 </style>

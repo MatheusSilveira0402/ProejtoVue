@@ -1,7 +1,7 @@
 <template>
     <div class="user-admin">
         <b-form>
-            <input type="hidden" id="user-id" v-model="user.id" /> 
+            <input type="hidden" id="user-id" v-model="user.id"/> 
             <b-row>
                 <b-col md="6" sm="12">
                     <b-form-group label="Nome:" label-for="user-name">
@@ -70,6 +70,7 @@ export default {
     data: function() {
         return {
             mode: 'save',
+            userAdmin: [],
             user: {},
             users: [],
             fields: [

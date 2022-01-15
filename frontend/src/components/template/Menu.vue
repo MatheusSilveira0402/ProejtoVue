@@ -66,8 +66,8 @@ export default {
     }
 
     .menu .tree-node.selected > .tree-content,
-    .menu .tree-node .tree-content:hover {
-        background-color: rgba(225, 255, 255, 0.2);
+    .menu .tree-node:not(.selected) > .tree-content:hover {
+        background: rgba(255, 255, 255, 0.2);
     }
 
     .tree-arrow.has-child {

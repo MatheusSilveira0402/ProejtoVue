@@ -7,7 +7,7 @@ import AdminPages from '@/components/admin/AdminPages'
 import ArticleById from '@/components/article/ArticleById'
 import Auth from '@/components/auth/Auth'
 
-import { userKey } from '@/global'
+//import { userKey } from '@/global'
 
 
 Vue.use(VueRouter)
@@ -42,15 +42,5 @@ const router = new VueRouter({
 
 }) 
 
-router.beforeEach((to, from, next) => {
-    const json = localStorage.getItem(userKey)
-
-    if(to.matched.some(record => record.meta.requiresAdmin)) {
-        const user = JSON.parse(json)
-        user && user.admin ? next() : next({ path: '/' })
-    } else {
-        next()
-    }
-})  
 
 export default router

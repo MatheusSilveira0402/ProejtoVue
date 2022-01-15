@@ -47,7 +47,7 @@ module.exports = app => {
         }
     }
     
-    const limit = 3 // usando para paginação
+    const limit = 10 // usando para paginação
     
     const get = async (req, res) => {
         const page  = req.query.page || 1
@@ -56,7 +56,7 @@ module.exports = app => {
         const count = parseInt(result.count)
 
         app.db('articles')
-            .select('id', 'name', 'description')
+            .select('id', 'name', 'description', 'userId')
             .limit(limit).offset(page * limit -limit)
             .then(article => res.json({ data: article, count, limit }))
             .catch(err => {res.status(500).send(err), console.log(err, 'Erro na função de paginação'.red)})

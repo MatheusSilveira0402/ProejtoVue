@@ -21,5 +21,5 @@ consign()
 
 
 app.listen(8001, ()=>{
-    console.log('beckend executado...')
+    console.log('beckend executado...'.green)
 })

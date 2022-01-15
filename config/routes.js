@@ -8,7 +8,7 @@ module.exports = app => {
     app.route('/users')
         .all(app.config.passport.authenticate())
         .post(admin(app.api.user.save))
-        .get(admin(app.api.user.get))
+        .get(app.api.user.get)
     
     app.route('/users/:id')
         .all(app.config.passport.authenticate())
@@ -19,8 +19,8 @@ module.exports = app => {
     // api das categorias aqui fica rotas    
     app.route('/categories')
         .all(app.config.passport.authenticate())
-        .get(admin(app.api.category.get))
-        .post(admin(app.api.category.save))
+        .get(app.api.category.get)
+        .post(app.api.category.save)
     
     //OBS: Cuido com a ordem! sempre rotas com {/:id} em baixo de rotas com nomes expecificos
     app.route('/categories/tree')
@@ -36,8 +36,8 @@ module.exports = app => {
     //api de artigos 
     app.route('/articles')
         .all(app.config.passport.authenticate())
-        .get(admin(app.api.article.get))
-        .post(admin(app.api.article.save))
+        .get(app.api.article.get)
+        .post(app.api.article.save)
     
     app.route('/articles/:id')
         .all(app.config.passport.authenticate())

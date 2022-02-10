@@ -1,5 +1,9 @@
 const admin = require('./admin')
 module.exports = app => {
+    //api de testes
+    app.route('/teste')
+        .get(app.api.test.get)
+
     // api de usuarios 
     app.post('/signup', app.api.user.save)
     app.post('/signin', app.api.auth.signin)
@@ -13,7 +17,7 @@ module.exports = app => {
     app.route('/users/:id')
         .all(app.config.passport.authenticate())
         .put(admin(app.api.user.save))
-        .get(admin(app.api.user.getById))
+        .get(app.api.user.getById)
         .delete(admin(app.api.user.remove))
 
     // api das categorias aqui fica rotas    
@@ -30,7 +34,7 @@ module.exports = app => {
     app.route('/categories/:id')
         .all(app.config.passport.authenticate())
         .get(app.api.category.getById)
-        .put(admin(app.api.category.save))
+        .put(app.api.category.save)
         .delete(admin(app.api.category.remove))
 
     //api de artigos 
@@ -42,8 +46,8 @@ module.exports = app => {
     app.route('/articles/:id')
         .all(app.config.passport.authenticate())
         .get(app.api.article.getById)
-        .put(admin(app.api.article.save))
-        .delete(admin(app.api.article.remove))     
+        .put(app.api.article.save)
+        .delete(app.api.article.remove)     
 
     app.route('/categories/:id/articles')
         .all(app.config.passport.authenticate())

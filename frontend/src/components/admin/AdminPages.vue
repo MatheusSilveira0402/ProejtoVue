@@ -12,9 +12,8 @@
                     <b-tab title="Categorias">
                         <CategoryAdmin />
                     </b-tab>
-                    <b-tab title="Usuário">
-                        <UserAdmin v-if="user.admin"/>
-                        <h1 class="text" v-else>Você não é administrador</h1>
+                    <b-tab v-if="user.admin" title="Usuário">
+                        <UserAdmin />     
                     </b-tab>
                 </b-tabs>
             </b-card>

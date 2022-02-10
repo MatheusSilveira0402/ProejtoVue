@@ -50,7 +50,7 @@
                 <b-button variant="warning" @click="loadArticle(data.item)" class="mr-2">
                     <i class="fa fa-pencil"></i>
                 </b-button>
-                <b-button variant="danger" v-if="user.admin" @click="loadArticle(data.item, 'remove')">
+                <b-button variant="danger" @click="loadArticle(data.item, 'remove')">
                     <i class="fa fa-trash"></i>
                 </b-button>
             </template>
@@ -123,6 +123,7 @@ export default {
                 .then( () => {
                     this.$toasted.global.defaultSuccess()
                     this.reset()
+                    this.articlesAuthor = []
                 })
                 .catch(showError)
         },
@@ -153,10 +154,11 @@ export default {
             })
         },
         loadUsers() {
-            const url = `${baseApiUrl}/users`
+            const url = `${baseApiUrl}/users/`
             axios.get(url).then(res => {
                 this.users = res.data.map(user => {
                     return { value: user.id, text: `${user.name} - ${user.email}`}
+                    
                 })
             })
         }

@@ -26,6 +26,6 @@ consign()
     .into(app)
 
 
-app.listen(8001, ()=>{
+app.listen(8002, ()=>{
     console.log('backend executado...'.green)
 })

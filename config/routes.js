@@ -3,7 +3,6 @@ module.exports = app => {
     //api de testes
     app.route('/teste')
         .get(app.api.test.get)
-
     // api de usuarios 
     app.post('/signup', app.api.user.save)
     app.post('/signin', app.api.auth.signin)

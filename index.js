@@ -5,7 +5,10 @@ const db = require('./config/db')
 const mongoose = require('mongoose')
 require('./config/mongodb')
 const bodyParser = require('body-parser')
+const swaggerUI = require('swagger-ui-express')
+const swaggerDocument = require('./swagger.json')
 
+app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 app.set('view engine', 'ejs');
 app.set('views', './app/views');
@@ -13,6 +16,8 @@ app.set('views', './app/views');
 app.use(bodyParser.json());
 app.db = db
 app.mongoose = mongoose
+
+
 
 app.use(express.urlencoded({ extended: true }))
 

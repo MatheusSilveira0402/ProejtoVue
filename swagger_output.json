@@ -1,0 +1,209 @@
+{
+  "swagger": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Kownledge",
+    "description": "Documentation rest api kownledge"
+  },
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/teste": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Teste"]
+      }
+    },
+    "/signup": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Auth"]
+      }
+    },
+    "/signin": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Auth"]
+      }
+    },
+    "/validateToken": {
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Auth"]
+      }
+    },
+    "/users": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Users"]
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "tag": ["Users"]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Users"]
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "tag": ["Users"]
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "tag": ["Users"]
+      }
+    },
+    "/categories": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Categories"]
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Categories"]
+      }
+    },
+    "/categories/tree": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Categories"]
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Categories"]
+      },
+      "put": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Categories"]
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "tag": ["Categories"]
+      }
+    },
+    "/articles": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Articles"]
+      },
+      "post": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Articles"]
+      }
+    },
+    "/articles/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Articles"]
+      },
+      "put": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Articles"]
+      },
+      "delete": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Articles"]
+      }
+    },
+    "/categories/{id}/articles": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Categories"]
+      }
+    },
+    "/stats": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {},
+        "tag": ["Stats"]
+      }
+    }
+  }
+}

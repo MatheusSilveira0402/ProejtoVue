@@ -6,7 +6,6 @@
   "scripts": {
     "start": "nodemon",
     "production": "pm2 start index.js --name knowledge-backend",
-    "test": "npx autocannon -c 1000 -d 30 -p 10 http://matheus.tech4every1.com.br:8001/teste"
   },
   "keywords": [],
   "author": "",
